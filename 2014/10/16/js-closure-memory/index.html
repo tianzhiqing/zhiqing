@@ -5,27 +5,21 @@
   
   <title>js闭包内存 | elseif</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="js闭包内存
+  <meta name="description" content="函数掉用返回funtion
 
-函数掉用返回funtion
-
-123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [">
+123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [用sIEve(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js闭包内存">
 <meta property="og:url" content="http://www.elseif.cn/2014/10/16/js-closure-memory/">
 <meta property="og:site_name" content="elseif">
-<meta property="og:description" content="js闭包内存
+<meta property="og:description" content="函数掉用返回funtion
 
-函数掉用返回funtion
-
-123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [">
+123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [用sIEve(">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js闭包内存">
-<meta name="twitter:description" content="js闭包内存
+<meta name="twitter:description" content="函数掉用返回funtion
 
-函数掉用返回funtion
-
-123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [">
+123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [用sIEve(">
 
   
     <link rel="alternative" href="/atom.xml" title="elseif" type="application/atom+xml">
@@ -76,7 +70,7 @@
         <section id="main"><article id="post-js-closure-memory" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/16/js-closure-memory/" class="article-date">
-  <time datetime="2014-10-16T12:19:17.000Z" itemprop="datePublished">Oct 16 2014</time>
+  <time datetime="2014-10-16T12:21:33.000Z" itemprop="datePublished">Oct 16 2014</time>
 </a>
     
   </div>
@@ -95,8 +89,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="js闭包内存">js闭包内存</h2>
-<ul>
+        <ul>
 <li>函数掉用返回funtion</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>).join(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5000</span>).join(<span class="string">""</span>));</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        arr.push(str);</div><div class="line">    }</div><div class="line"> }　　　　　　　<span class="comment">//这里内存无异常  [用sIEve(查看ie浏览器内存的使用和内存泄露问题)](http://home.online.nl/jsrosman/) 显示为 19000+</span></div><div class="line"><span class="keyword">var</span> other = main();	<span class="comment">//这里内存开始异常 显示为 68000+</span></div><div class="line">other = <span class="literal">null</span>;<span class="comment">//这里内存还原 显示为19000+</span></div></pre></td></tr></table></figure>

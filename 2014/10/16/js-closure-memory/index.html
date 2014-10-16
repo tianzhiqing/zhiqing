@@ -3,17 +3,29 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2014/10 | elseif</title>
+  <title>js闭包内存 | elseif</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="elseif">
-<meta property="og:url" content="http://www.elseif.cn/archives/2014/10/">
+  <meta name="description" content="js闭包内存
+
+函数掉用返回funtion
+
+123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js闭包内存">
+<meta property="og:url" content="http://www.elseif.cn/2014/10/16/js-closure-memory/">
 <meta property="og:site_name" content="elseif">
-<meta property="og:description" content="前端">
+<meta property="og:description" content="js闭包内存
+
+函数掉用返回funtion
+
+123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="elseif">
-<meta name="twitter:description" content="前端">
+<meta name="twitter:title" content="js闭包内存">
+<meta name="twitter:description" content="js闭包内存
+
+函数掉用返回funtion
+
+123456789function main(){    var str = new Array(1000).join(new Array(5000).join(''));    return function(){        var arr = [];        arr.push(str);    } }　　　　　　　//这里内存无异常  [">
 
   
     <link rel="alternative" href="/atom.xml" title="elseif" type="application/atom+xml">
@@ -61,9 +73,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-js-closure-memory" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-js-closure-memory" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/16/js-closure-memory/" class="article-date">
   <time datetime="2014-10-16T12:19:17.000Z" itemprop="datePublished">Oct 16 2014</time>
@@ -76,8 +86,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/16/js-closure-memory/">js闭包内存</a>
+    <h1 class="article-title" itemprop="name">
+      js闭包内存
     </h1>
   
 
@@ -131,56 +141,26 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-com" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/11/com/" class="article-date">
-  <time datetime="2014-10-11T08:20:36.000Z" itemprop="datePublished">Oct 11 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/11/com/">测试的1个</a>
-    </h1>
+    <a href="/2014/10/11/com/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">测试的1个</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Test">Test</h2>
-<ul>
-<li>这是一个测试文件</li>
-</ul>
-<h2 id="_"> </h2>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alert(<span class="string">'test'</span>);</div></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.elseif.cn/2014/10/11/com/" data-id="d0pfyaohuj7bq3a3" class="article-share-link">Share</a>
-      
-        <a href="http://www.elseif.cn/2014/10/11/com/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
 
-  
-  
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 </section>
         
           <aside id="sidebar">
@@ -247,11 +227,13 @@
 <script>
   var disqus_shortname = 'tianzhiqing';
   
+  var disqus_url = 'http://www.elseif.cn/2014/10/16/js-closure-memory/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

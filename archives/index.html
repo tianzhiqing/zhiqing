@@ -63,6 +63,78 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-closure-memory" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/16/js-closure-memory/" class="article-date">
+  <time datetime="2014-10-16T12:19:17.000Z" itemprop="datePublished">Oct 16 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/16/js-closure-memory/">js闭包内存</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="js闭包内存">js闭包内存</h2>
+<ul>
+<li>函数掉用返回funtion</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>).join(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5000</span>).join(<span class="string">""</span>));</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        arr.push(str);</div><div class="line">    }</div><div class="line"> }　　　　　　　<span class="comment">//这里内存无异常  [用sIEve(查看ie浏览器内存的使用和内存泄露问题)](http://home.online.nl/jsrosman/) 显示为 19000+</span></div><div class="line"><span class="keyword">var</span> other = main();	<span class="comment">//这里内存开始异常 显示为 68000+</span></div><div class="line">other = <span class="literal">null</span>;<span class="comment">//这里内存还原 显示为19000+</span></div></pre></td></tr></table></figure>
+
+<p>在other未销毁之前，str在内存中都得不到释放，即使main函数已调用完成</p>
+<hr>
+<ul>
+<li>操作普通dom</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>).join(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5000</span>).join(<span class="string">""</span>));</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"add"</span>).onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        arr.push(str);</div><div class="line">    }　　　　　　　　　　<span class="comment">//这里内存异常了 显示 68000+</span></div><div class="line">　　 <span class="built_in">document</span>.getElementById(<span class="string">"add"</span>).onclick = <span class="literal">null</span>; <span class="comment">//这里显示为正常  19000+</span></div><div class="line">})();</div></pre></td></tr></table></figure>
+
+<p>同上，在add的Dom节点click事件未消除之产，对str这个引用永远都是存在的</p>
+<hr>
+<ul>
+<li>要写在不同环境中内存才能正确的被释放.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>).join(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5000</span>).join(<span class="string">""</span>));</div><div class="line">    <span class="keyword">var</span> add = <span class="built_in">document</span>.getElementById(<span class="string">"add"</span>);</div><div class="line">    add.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        arr.push(str);</div><div class="line">    }</div><div class="line">})();</div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> det = <span class="built_in">document</span>.getElementById(<span class="string">"det"</span>),</div><div class="line">    	add = <span class="built_in">document</span>.getElementById(<span class="string">"add"</span>);</div><div class="line">    det.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        add.onclick = <span class="literal">null</span>;</div><div class="line">    }</div><div class="line">})();</div></pre></td></tr></table></figure>
+
+<ul>
+<li>一个函数既是一个环境,最大的环境是window,内存的回收是按照一个环境一个环境来施放的.[当这个环境中,全局变量所有的引用都断开的话,此环境就会被施放内存]</li>
+</ul>
+<p>对于内存回收,在函数中的局部变量在函数结束的时候会被垃圾回收机制回收内存, 全部变量是否就是不在函数内的变量呢, 比如,下面的变量a,当然还有页面内的各种元素.由于变量a是个全局变量,所以他所占的内存是不会被施放的,也就解释了为什么函数main中的变量str所占的内存没有被回收,如果按照写法二,是不会出现内存问题的.</p>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>).join(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5000</span>).join(<span class="string">"xxxxx"</span>));</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        arr.push(str);</div><div class="line">        str = <span class="literal">null</span></div><div class="line">    };</div><div class="line">}</div><div class="line"><span class="keyword">var</span> a = main(); </div><div class="line">a();</div><div class="line"></div><div class="line">写法二:</div><div class="line"><span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">　　<span class="keyword">var</span> a = main(); </div><div class="line">　　a();</div><div class="line">}()</div></pre></td></tr></table></figure>
+
+<ul>
+<li>结论:局部变量只有被全局变量所引用内存才不会施放.不然还是回被垃圾回收机制回收内存.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> add = <span class="built_in">document</span>.getElementById(<span class="string">'add'</span>);</div><div class="line"><span class="keyword">var</span> det = <span class="built_in">document</span>.getElementById(<span class="string">'det'</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> arg1 = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1000</span>).join(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5000</span>).join(<span class="string">""</span>));</div><div class="line">    <span class="keyword">var</span> arg2 = <span class="number">2</span>;</div><div class="line">    gg = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        arg2++;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        alert(arg2);</div><div class="line">        gg();</div><div class="line">    }</div><div class="line">}</div><div class="line"><span class="keyword">var</span> aa = main();</div><div class="line">gg();</div><div class="line">add.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">    aa();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>变量arg2被引用,arg1没被引用,所以arg1所占的内存还是会被回收</p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.elseif.cn/2014/10/16/js-closure-memory/" data-id="q5crarj0rlab4vpu" class="article-share-link">Share</a>
+      
+        <a href="http://www.elseif.cn/2014/10/16/js-closure-memory/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-com" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/11/com/" class="article-date">
@@ -179,7 +251,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -189,6 +261,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/10/16/js-closure-memory/">js闭包内存</a>
+          </li>
         
           <li>
             <a href="/2014/10/11/com/">测试的1个</a>
